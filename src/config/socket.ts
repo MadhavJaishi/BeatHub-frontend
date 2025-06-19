@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
-import { setQueue } from '../redux/songQueue';
-import type { Song } from '../redux/songQueue';
+import { setQueue } from '../redux/songQueueSlice';
+import type { Song } from '../redux/songQueueSlice';
 import { useDispatch } from 'react-redux';
 import type { AppDispatch } from '../redux/store';
 
@@ -10,7 +10,7 @@ const dispatch = useDispatch<AppDispatch>();
 
 socket.on('queueUpdated', (queue: Song[]) => {
     console.log('Updated queue received:', queue);
-    dispatch(setQueue(queue)); // Update Redux store
+    dispatch(setQueue(queue));
 });
 
 export default socket;

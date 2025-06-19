@@ -1,34 +1,34 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import API from '../components/config/API';
+import API from '../config/API';
 
+type roleType = 'user' | 'admin';
 interface UserState {
     user: {
+        id: string;
         name: string;
         email: string;
+        role: roleType;
     } | null;
     loading: boolean;
     error: string | null;
-    isLoggedIn: boolean;
 }
 
 const initialState: UserState = {
     user: null,
     loading: false,
     error: null,
-    isLoggedIn: false,
 };
 
-export const addUser = createAsyncThunk(
-    'user/addUser',
-    async (userData: { name: string; email: string }, { rejectWithValue }) => {
+export const fetchUser = createAsyncThunk(
+    'user/fetchUser',
+    async (userId: string) => {
         try {
             const response = await API.post(
-                "v1/users/addUser",
-                userData
+                `v1/users//getUser/${userId}`,
             );
-            return response.data; // Return the response data
+            return { ...response.data, id: userId };
         } catch (error: any) {
-            return rejectWithValue(error.response?.data || 'Failed to add user');
+            return console.error(error.response?.data || 'Failed to add user');
         }
     }
 );
@@ -36,34 +36,22 @@ export const addUser = createAsyncThunk(
 const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {
-        setUser: (state, action: PayloadAction<{ name: string; email: string }>) => {
-            state.user = action.payload;
-            state.isLoggedIn = true;
-        },
-        clearUser: (state) => {
-            state.user = null;
-            state.isLoggedIn = false;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(addUser.pending, (state) => {
+            .addCase(fetchUser.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(addUser.fulfilled, (state, action: PayloadAction<{ name: string; email: string }>) => {
+            .addCase(fetchUser.fulfilled, (state, action: PayloadAction<{ id: string, name: string; email: string, role: roleType }>) => {
                 state.loading = false;
                 state.user = action.payload;
-                state.isLoggedIn = true;
             })
-            .addCase(addUser.rejected, (state, action: PayloadAction<any>) => {
+            .addCase(fetchUser.rejected, (state, action: PayloadAction<any>) => {
                 state.loading = false;
                 state.error = action.payload;
-                state.isLoggedIn = false;
             });
     },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -2,15 +2,14 @@ import Container from "./shared/Container";
 import NavItem from "./shared/NavItem";
 import ButtonLink from "./shared/ButtonLink";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleDarkMode } from "../redux/darkMode";
+import { toggleDarkMode } from "../redux/darkModeSlice";
 import type { RootState } from "../redux/store";
 import { MdDarkMode } from "react-icons/md";
-import { MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineLightMode } from "react-icons/md";
 import logo from "../assets/logo.png";
 
 const navItems = [
     { href: '#', text: 'Home' },
-    { href: '#services', text: 'Services' },
     { href: '#about-us', text: 'About Us' },
     { href: '#features', text: 'Features' }
 ]; ``
@@ -34,7 +33,7 @@ const Navbar = () => {
           absolute top-full left-0 lg:static lg:top-0 bg-body lg:bg-transparent
           border-x border-x-box-border lg:border-x-0 lg:h-auto h-0">
                         <ul className="border-t border-box-border lg:border-t-0 px-6 
-            lg:px-0 pt-6 lg:pt-0 flex flex-col lg:flex-row gap-y-4 gap-x-3 text-lg 
+            lg:px-0 pt-6 lg:pt-0 flex flex-col lg:flex-row gap-y-4 gap-x-6 text-lg 
             text-heading-2 w-full lg:justify-center lg:items-center">
                             {navItems.map((item, key) => (
                                 <NavItem key={key} href={item.href} text={item.text} />
@@ -51,7 +50,7 @@ const Navbar = () => {
                             {/* <img src={darkModeIcon} height={24} width={24} className=""></img> */}
                             {darkMode ?
                                 <MdDarkMode className="text-2xl" /> :
-                                <MdOutlineDarkMode className="text-2xl text-gray-500" />
+                                <MdOutlineLightMode className="text-2xl text-gray-500" />
                             }
 
                         </button>
