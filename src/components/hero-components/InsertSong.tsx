@@ -1,7 +1,7 @@
 import { IoIosMusicalNotes } from "react-icons/io";
 const InsertSong = () => {
     return (
-        <div className="w-full max-w-xl mx-auto my-10">
+        <div className="w-5/6 md:w-1/2 lg:w-2/5 mx-10 my-10">
             <div className="flex flex-row items-center justify-center mb-6 space-x-4">
                 <IoIosMusicalNotes className="text-heading-1" size={34} />
                 <h1 className="text-3xl font-bold text-heading-1 mb-4"> Share a YouTube Song</h1>

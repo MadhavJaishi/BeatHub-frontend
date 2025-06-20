@@ -11,6 +11,7 @@
     --heading-2: 31 41 55;
     --heading-3: 55 65 81;
     --border-color: 229 231 235;
+    --soft-box-bg: 240 240 240;
 }
 
 html.dark {
@@ -23,6 +24,7 @@ html.dark {
     --heading-2: 243 244 246;
     --heading-3: 209 213 219;
     --border-color: 75 85 99;
+    --soft-box-bg: 30 30 30;
 }
 
 @layer utilities {
@@ -56,6 +58,10 @@ html.dark {
 
     .box-shadow {
         box-shadow: 0 1px 2px rgb(var(--box-sd));
+    }
+
+    .soft-bg-box {
+        background-color: rgb(var(--soft-box-bg));
     }
 }
 
