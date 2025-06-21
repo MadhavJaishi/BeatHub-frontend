@@ -1,12 +1,14 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import OtpVerification from './components/OtpVerification';
-import Hero from './components/Hero';
-import NavBar from './components/NavBar';
-import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch, RootState } from './redux/store';
-import { useEffect, useState } from 'react';
-import { authActions } from './redux/authSlice';
-import { fetchUser } from './redux/userSlice';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import OtpVerification from "./components/OtpVerification";
+import Hero from "./components/Hero";
+import NavBar from "./components/NavBar";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "./redux/store";
+import { useEffect, useState } from "react";
+import { authActions } from "./redux/authSlice";
+import { fetchUser } from "./redux/userSlice";
+import Aboutus from "./components/Aboutus";
+import QueueListener from "./config/queueListener";
 
 function App() {
   const { darkMode } = useSelector((state: RootState) => state.darkMode);
@@ -23,7 +25,7 @@ function App() {
       dispatch(fetchUser(userId));
     }
     setLoading(false);
-  }, [])
+  }, []);
   useEffect(() => {
     const html = document.documentElement;
     if (darkMode) {
@@ -34,30 +36,31 @@ function App() {
   }, [darkMode]);
   return (
     <>
+      <QueueListener />
       <NavBar />
+      <div id="header"></div>
       <Router>
         <Routes>
-          {loading ?
-            (
-              <Route
-                path="/"
-                element={<div className="flex items-center justify-center h-screen bg-body text-2xl">
-                  <h1 className='text-heading-1'>Loading...</h1>
-                </div>}
-              />
-            )
-            : (
-              <Route
-                path="/"
-                element={isLoggedIn ? <Hero /> : <OtpVerification />}
-              />
-            )}
-
+          {loading ? (
+            <Route
+              path="/"
+              element={
+                <div className="flex items-center justify-center h-screen bg-body text-2xl">
+                  <h1 className="text-heading-1">Loading...</h1>
+                </div>
+              }
+            />
+          ) : (
+            <Route
+              path="/"
+              element={isLoggedIn ? <Hero /> : <OtpVerification />}
+            />
+          )}
         </Routes>
       </Router>
+      <Aboutus />
     </>
-  )
+  );
 }
 
 export default App;
-
